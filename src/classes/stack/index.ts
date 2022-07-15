@@ -1,6 +1,16 @@
+//  TODO: Use <Generics>
 class Stack {
   //Array, Length, Last Index(top)
   private array: any[] = [];
+
+  //Check if the element is empty
+  get isEmpty(): boolean {
+    return this.array.length === 0;
+  }
+
+  get length(): number {
+    return this.array.length;
+  }
 
   //Push to array
   push(newItem: any): any {
@@ -24,11 +34,6 @@ class Stack {
   //Empty the array
   empty(): any {
     this.array.length = 0;
-  }
-
-  //Check if the element is empty
-  get isEmpty(): boolean {
-    return this.array.length === 0;
   }
 }
 
