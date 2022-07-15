@@ -4,7 +4,7 @@ class EvaluatePrefix {
   string: string = "";
 
   constructor(string) {
-    this.string = string.replace(/\s/g, "");
+    this.string = string;
   }
 
   //should move to a new class
@@ -22,7 +22,7 @@ class EvaluatePrefix {
   createStackArray() {
     const plate = []; //keeping
     const stackArray = new Stack(); //stack pre to po
-    for (let i = this.string.length; i > 0; i--) {
+    for (let i = this.string.length - 1; i >= 0; i--) {
       if (this.isOperator(this.string[i])) {
         const s1 = stackArray.pop();
         plate.push(s1);
@@ -41,7 +41,7 @@ class EvaluatePrefix {
       }
     }
 
-    return stackArray; //dose not work :(
+    return stackArray;
   }
 }
 
