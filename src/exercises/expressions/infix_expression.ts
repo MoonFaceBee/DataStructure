@@ -1,6 +1,10 @@
-import Expression from "./expression.ts";
+import BaseExpression from "./base_expression.ts";
+import PrefixExpression from "./prefix_expression.ts";
+import PostfixExpression from "./postfix_expression.ts";
 
-class InfixExpression extends Expression {
+import Stack from "../../classes/stack/index.ts";
+
+class InfixExpression extends BaseExpression {
 	constructor(expression: string) {
 		super(expression, 'infix');
 	}

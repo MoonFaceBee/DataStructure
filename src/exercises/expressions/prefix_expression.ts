@@ -1,7 +1,10 @@
-import Stack from "../../classes/stack/index.ts";
-import Expression from "./expression.ts";
+import BaseExpression from "./base_expression.ts";
+import PostfixExpression from "./postfix_expression.ts";
+import InfixExpression from "./infix_expression.ts";
 
-class PrefixExpression extends Expression {
+import Stack from "../../classes/stack/index.ts";
+
+class PrefixExpression extends BaseExpression {
 	constructor(expression: string) {
 		super(expression, 'prefix');
 	}
