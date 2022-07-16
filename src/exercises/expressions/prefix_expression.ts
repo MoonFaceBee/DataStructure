@@ -10,7 +10,23 @@ class PrefixExpression extends BaseExpression {
   }
 
   toPostfix(): PostfixExpression {
-    return new PostfixExpression(this.expression.split("").reverse().join(""));
+    const s = new Stack();
+
+    const exp = this.expression;
+
+    for (let i = exp.length; i >= 0; i--) {
+      if (this.isOperator(exp[i])) {
+        const op1 = s.pop();
+        const op2 = s.pop();
+        const o = exp[i];
+
+        s.push(`${op1}${op2}${o}`);
+      } else {
+        s.push(exp[i]);
+      }
+    }
+
+    return new PostfixExpression(s.pop());
   }
 
   toInfix(): InfixExpression {
