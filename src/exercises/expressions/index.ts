@@ -13,5 +13,5 @@ console.log(y.toInfix());
 
 const z = Expression.fromString("9+2*3+7") as InfixExpression;
 console.log(z, "  ->  ", z.evaluate());
-console.log(z.toPostfix())
-console.log(z.toPrefix())
+console.log(z.toPostfix());
+console.log(z.toPrefix());
