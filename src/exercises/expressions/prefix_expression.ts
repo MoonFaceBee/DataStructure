@@ -59,7 +59,7 @@ class PrefixExpression extends BaseExpression {
         const op2 = stackArray.pop();
         const op1 = stackArray.pop();
 
-        const result: number = this.applyOperator(op1, op, op2);
+        const result: number = this.applyOperator(op2, op, op1);
 
         stackArray.push(result);
       } else {
