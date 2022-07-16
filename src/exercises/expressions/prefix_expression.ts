@@ -5,27 +5,43 @@ import InfixExpression from "./infix_expression.ts";
 import Stack from "../../classes/stack/index.ts";
 
 class PrefixExpression extends BaseExpression {
-	constructor(expression: string) {
-		super(expression, 'prefix');
-	}
+  constructor(expression: string) {
+    super(expression, "prefix");
+  }
 
-	// toPostfix(): PostfixExpression {
-	// 	// todo
-	// }
-	//
-	// toInfix(): InfixExpression {
-	// 	// todo
-	// }
+  toPostfix(): PostfixExpression {
+    return new PostfixExpression(this.expression.split("").reverse().join(""));
+  }
 
-  evaluate() {
-    const stackArray: Stack = new Stack(); //stack pre to po
-		const exp = this.expression;
+  toInfix(): InfixExpression {
+    const s = new Stack();
+
+    const exp = this.expression;
 
     for (let i = exp.length - 1; i >= 0; i--) {
       if (this.isOperator(exp[i])) {
-				const op = exp[i];
-        const op1 = stackArray.pop();
+        const op1 = s.pop();
+        const op2 = s.pop();
+        const o = exp[i];
+
+        s.push(`(${op1}${o}${op2})`);
+      } else {
+        s.push(exp[i]);
+      }
+    }
+
+    return new InfixExpression(s.pop());
+  }
+
+  evaluate() {
+    const stackArray: Stack = new Stack();
+    const exp = this.expression;
+
+    for (let i = exp.length - 1; i >= 0; i--) {
+      if (this.isOperator(exp[i])) {
+        const op = exp[i];
         const op2 = stackArray.pop();
+        const op1 = stackArray.pop();
 
         const result: number = this.applyOperator(op1, op, op2);
 

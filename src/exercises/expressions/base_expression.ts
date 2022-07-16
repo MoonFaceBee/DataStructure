@@ -1,32 +1,47 @@
-export type TExpressionType = 'infix' | 'prefix' | 'postfix';
+export type TExpressionType = "infix" | "prefix" | "postfix";
 
 class BaseExpression {
-	expression: string;
-	type: TExpressionType;
+  expression: string;
+  type: TExpressionType;
 
-	constructor(expression: string, type: TExpressionType) {
-		this.expression = expression;
-		this.type = type;
-	}
+  constructor(expression: string, type: TExpressionType) {
+    this.expression = expression;
+    this.type = type;
+  }
 
-	isOperator(char: string): boolean {
-		return '+-*/^()'.includes(char);
-	}
+  isOperator(char: string): boolean {
+    return "+-*/^()".includes(char);
+  }
 
-	applyOperator(op1: number, op: string, op2: number): number {
+  applyOperator(op1: number, op: string, op2: number): number {
+    switch (op) {
+      case "+":
+        return op1 + op2;
+      case "-":
+        return op1 - op2;
+      case "*":
+        return op1 * op2;
+      case "/":
+        return op1 / op2;
+      case "^":
+        return op1 ** op2;
+      default:
+        return Number.NaN;
+    }
+  }
+
+	getOperatorPrecedence(op) {
 		switch (op) {
 			case '+':
-				return op1 + op2;
 			case '-':
-				return op1 - op2;
+				return 1
 			case '*':
-				return op1 * op2;
 			case '/':
-				return op1 / op2;
+				return 2
 			case '^':
-				return op1 ** op2;
+				return 3
 			default:
-				return Number.NaN;
+				return Number.NaN
 		}
 	}
 }

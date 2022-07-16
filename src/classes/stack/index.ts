@@ -35,6 +35,10 @@ class Stack {
   empty(): any {
     this.array.length = 0;
   }
+
+	contains(item: any): boolean {
+		return this.array.includes(item)
+	}
 }
 
 export default Stack;
