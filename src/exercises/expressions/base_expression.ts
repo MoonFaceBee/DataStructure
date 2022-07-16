@@ -30,20 +30,20 @@ class BaseExpression {
     }
   }
 
-	getOperatorPrecedence(op) {
-		switch (op) {
-			case '+':
-			case '-':
-				return 1
-			case '*':
-			case '/':
-				return 2
-			case '^':
-				return 3
-			default:
-				return Number.NaN
-		}
-	}
+  getOperatorPrecedence(op: any) {
+    switch (op) {
+      case "+":
+      case "-":
+        return 1;
+      case "*":
+      case "/":
+        return 2;
+      case "^":
+        return 3;
+      default:
+        return Number.NaN;
+    }
+  }
 }
 
 export default BaseExpression;
