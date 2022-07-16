@@ -10,7 +10,23 @@ class PostfixExpression extends BaseExpression {
   }
 
   toPrefix(): PrefixExpression {
-    return new PrefixExpression(this.expression.split("").reverse().join(""));
+    const s = new Stack();
+
+    const exp = this.expression;
+
+    for (let i = 0; i < exp.length; i++) {
+      if (this.isOperator(exp[i])) {
+        const op2 = s.pop();
+        const op1 = s.pop();
+        const o = exp[i];
+
+        s.push(`${o}${op1}${op2}`);
+      } else {
+        s.push(exp[i]);
+      }
+    }
+
+    return new PrefixExpression(s.pop());
   }
 
   toInfix(): InfixExpression {
@@ -34,23 +50,23 @@ class PostfixExpression extends BaseExpression {
   }
 
   evaluate() {
-    const s = new Stack()
+    const s = new Stack();
 
-		const exp = this.expression
+    const exp = this.expression;
 
-		for (let i = 0; i < exp.length; i ++) {
-			if (this.isOperator(exp[i])) {
-				const op2 = s.pop()
-				const op1 = s.pop()
-				const o = exp[i]
+    for (let i = 0; i < exp.length; i++) {
+      if (this.isOperator(exp[i])) {
+        const op2 = s.pop();
+        const op1 = s.pop();
+        const o = exp[i];
 
-				s.push(this.applyOperator(op1, o, op2))
-			} else {
-				s.push(Number(exp[i]))
-			}
-		}
+        s.push(this.applyOperator(op1, o, op2));
+      } else {
+        s.push(Number(exp[i]));
+      }
+    }
 
-		return s.pop()
+    return s.pop();
   }
 }
 
