@@ -34,3 +34,23 @@ Deno.test("Stack Empty", () => {
 
   assertEquals(s.length, 0);
 });
+
+Deno.test('Contains', () => {
+	const s = new Stack()
+
+	s.push(1)
+	s.push(2)
+
+	assertEquals(s.contains(2), true)
+})
+
+Deno.test('Reset', () => {
+	const s = new Stack()
+
+	s.push(1)
+	s.push(2)
+
+	s.empty()
+
+	assertEquals(s.isEmpty, true)
+})
