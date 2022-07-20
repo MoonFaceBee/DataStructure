@@ -3,7 +3,7 @@ export type TSimpleQueueType = string | number | undefined;
 class SimpleQueue {
   private array: Array<TSimpleQueueType> = [];
 
-  //define size
+  //define size and front and rear
   size;
 	front = -1
 	rear = -1

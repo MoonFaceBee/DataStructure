@@ -3,7 +3,7 @@ import { assertEquals } from "https://deno.land/std@0.148.0/testing/asserts.ts";
 import Stack from "./index.ts";
 
 Deno.test("Stack Push", () => {
-  const s = new Stack();
+  const s = new Stack(3);
 
   s.push(1);
   s.push(2);
@@ -22,7 +22,7 @@ Deno.test("Stack Push", () => {
 });
 
 Deno.test("Stack Empty", () => {
-  const s = new Stack();
+  const s = new Stack(3);
 
   s.push(1);
   s.push(2);
@@ -36,7 +36,7 @@ Deno.test("Stack Empty", () => {
 });
 
 Deno.test("Contains", () => {
-  const s = new Stack();
+  const s = new Stack(2);
 
   s.push(1);
   s.push(2);
@@ -45,7 +45,7 @@ Deno.test("Contains", () => {
 });
 
 Deno.test("Reset", () => {
-  const s = new Stack();
+  const s = new Stack(2);
 
   s.push(1);
   s.push(2);

@@ -4,37 +4,56 @@ class Stack {
   //Array, Length
   private array: Array<TStackType> = [];
 
+	//define size and front and rear
+	size;
+	top = -1
+	constructor(size: number) {
+		this.size = size;
+	}
+
   get length(): number {
     return this.array.length;
   }
 
-  //Check if the element is empty
+	//check if full
+	get isFull(): boolean {
+		return this.top === this.size
+	}
+
+  //Check if empty
   get isEmpty(): boolean {
-    return this.array.length === 0;
+    return this.top === -1;
   }
 
   //Push to array
   push(newItem: TStackType): this {
-    this.array[this.array.length] = newItem;
+		if (!this.isFull) {
+			this.top = this.top + 1
+			this.array[this.array.length] = newItem;
+		}
 
     return this;
   }
 
   //Pop element
   pop(): TStackType {
-    const val = this.array.at(-1);
-    this.array.length -= 1;
-    return val as TStackType;
+		if (!this.isEmpty) {
+			this.top = this.top - 1
+			return this.array[this.top]
+		}
   }
 
   //Get the value of last element
   peek(): TStackType {
-    return this.array.at(-1) as TStackType;
+    return this.array[this.top]
   }
 
   //Empty the array
   empty() {
-    this.array.length = 0;
+    if (!this.isEmpty) {
+			this.array.length = 0;
+			this.top = -1
+		}
   }
 
   contains(item: TStackType): boolean {
