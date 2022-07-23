@@ -21,7 +21,7 @@ class InfixExpression extends BaseExpression {
   }
 
   toPostfix(): PostfixExpression {
-    const s = new Stack();
+    const s = new Stack<string>(100);
     const exp = this.expression;
     let out = "";
 

@@ -1,8 +1,8 @@
-import SimpleQueue from "./index.ts";
+import Queue from "./index.ts";
 import { assertEquals } from "https://deno.land/std@0.148.0/testing/asserts.ts";
 
-Deno.test("SimpleQueue", () => {
-  const q = new SimpleQueue(3);
+Deno.test("Queue", () => {
+  const q = new Queue<number>(3);
 
   q.enqueue(1);
   q.enqueue(2);
@@ -20,14 +20,14 @@ Deno.test("SimpleQueue", () => {
   q.dequeue();
   q.dequeue();
 
-	assertEquals(q.length, 4)
-	assertEquals(q.size, 3)
+	assertEquals(q.count, 0);
+	assertEquals(q.size, 3);
 
   assertEquals(q.isEmpty, true);
 });
 
 Deno.test("Contains", () => {
-  const q = new SimpleQueue(2);
+  const q = new Queue<number>(2);
 
   q.enqueue(1);
   q.enqueue(2);
@@ -36,7 +36,7 @@ Deno.test("Contains", () => {
 });
 
 Deno.test("Reset", () => {
-  const q = new SimpleQueue(2);
+  const q = new Queue<number>(2);
 
   q.enqueue(1);
   q.enqueue(2);

@@ -10,7 +10,7 @@ class PostfixExpression extends BaseExpression {
   }
 
   toPrefix(): PrefixExpression {
-    const s = new Stack();
+    const s = new Stack<string>(100);
 
     const exp = this.expression;
 
@@ -26,11 +26,11 @@ class PostfixExpression extends BaseExpression {
       }
     }
 
-    return new PrefixExpression(s.pop());
+    return new PrefixExpression(s.pop() as string);
   }
 
   toInfix(): InfixExpression {
-    const s = new Stack();
+    const s = new Stack<string>(100);
 
     const exp = this.expression;
 
@@ -46,18 +46,18 @@ class PostfixExpression extends BaseExpression {
       }
     }
 
-    return new InfixExpression(s.pop());
+    return new InfixExpression(s.pop() as string);
   }
 
-  evaluate() {
-    const s = new Stack();
+  evaluate(): number {
+    const s = new Stack<number>(100);
 
     const exp = this.expression;
 
     for (let i = 0; i < exp.length; i++) {
       if (this.isOperator(exp[i])) {
-        const op2 = s.pop();
-        const op1 = s.pop();
+        const op2 = s.pop() as number;
+        const op1 = s.pop() as number;
         const o = exp[i];
 
         s.push(this.applyOperator(op1, o, op2));
@@ -66,7 +66,7 @@ class PostfixExpression extends BaseExpression {
       }
     }
 
-    return s.pop();
+    return s.pop() as number;
   }
 }
 
