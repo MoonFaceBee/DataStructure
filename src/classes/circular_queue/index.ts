@@ -38,7 +38,7 @@ class CircularQueue<T> implements IQueue<T> {
 	enqueue(item: T): IQueue<T> {
 		if (!this.isFull) {
 			if (this.rear + 1 === this.size && this.front > 0) {
-				//fill order
+				this.rear = (this.rear + 1) % this.size
 
 			} else {
 				this.rear += 1
