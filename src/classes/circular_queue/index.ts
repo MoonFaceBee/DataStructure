@@ -37,20 +37,56 @@ class CircularQueue<T> implements IQueue<T> {
 
 	enqueue(item: T): IQueue<T> {
 		if (!this.isFull) {
-			this.front += this.front
+			if (this.rear + 1 === this.size && this.front > 0) {
+				 // 0 - this.front is empty
+			} else {
+				this.rear += 1
+			}
+
+			this.array[this.rear] = item
 		}
+
+		return this
 	}
 
 	dequeue(): T | undefined {
+		let value;
+
+		if (!this.isEmpty) {
+			value = this.array[this.front];
+
+			if (this.front === this.rear) {
+				this.front -= 1
+				this.rear -= 1
+			} else {
+				this.front += 1
+			}
+		}
+
+		return value
 	}
 
 	peek(): T | undefined {
+		if (!this.isEmpty) {
+			return this.array[this.front];
+		}
+
+		return undefined;
 	}
 
 	empty() {
+		if (!this.isEmpty) {
+			this.front = -1;
+			this.rear = -1;
+		}
 	}
 
 	contains(item: T): boolean {
+		if (!this.isEmpty) {
+			if (this.front > this.rear) {
+
+			}
+		}
 	}
 }
 
