@@ -1,8 +1,8 @@
 import IQueue from "../../interfaces/queue.ts";
 
 class Queue<T> implements IQueue<T> {
-	private front;
-	private rear;
+  private front;
+  private rear;
 
   private array: Array<T>;
 
@@ -11,7 +11,7 @@ class Queue<T> implements IQueue<T> {
 
   constructor(size: number) {
     this.array = new Array<T>(size);
-		this.size = size;
+    this.size = size;
     this.front = -1;
     this.rear = -1;
   }
@@ -23,22 +23,22 @@ class Queue<T> implements IQueue<T> {
 
   //check if full
   get isFull(): boolean {
-		return this.rear + 1 === this.size;
+    return this.rear + 1 === this.size;
   }
 
   //check if empty
   get isEmpty(): boolean {
-		return this.front === -1 || this.rear === -1 || this.front > this.rear;
+    return this.front === -1 || this.rear === -1 || this.front > this.rear;
   }
 
   //Add element to the end of array
   enqueue(newItem: T): Queue<T> {
     if (!this.isFull) {
-			this.rear += 1;
+      this.rear += 1;
 
-			if (this.front === -1) {
-				this.front += 1;
-			}
+      if (this.front === -1) {
+        this.front += 1;
+      }
 
       this.array[this.rear] = newItem;
     }
@@ -55,7 +55,7 @@ class Queue<T> implements IQueue<T> {
 
       this.front += 1;
     }
-    
+
     return value;
   }
 
@@ -71,8 +71,8 @@ class Queue<T> implements IQueue<T> {
   //Reset
   empty(): void {
     if (!this.isEmpty) {
-			this.front = -1;
-			this.rear = -1;
+      this.front = -1;
+      this.rear = -1;
     }
   }
 

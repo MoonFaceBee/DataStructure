@@ -1,18 +1,18 @@
 interface IStack<T> {
-    readonly size: number;
+  readonly size: number;
 
-    get count(): number;
+  get count(): number;
 
-    get isEmpty(): boolean;
-    get isFull(): boolean;
+  get isEmpty(): boolean;
+  get isFull(): boolean;
 
-    push(item: T): IStack<T>;
-    peek(): T | undefined;
-    pop(): T | undefined;
+  push(item: T): IStack<T>;
+  peek(): T | undefined;
+  pop(): T | undefined;
 
-    empty(): void;
+  empty(): void;
 
-    contains(item: T): boolean;
+  contains(item: T): boolean;
 }
 
 export default IStack;

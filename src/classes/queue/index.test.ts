@@ -20,8 +20,8 @@ Deno.test("Queue", () => {
   q.dequeue();
   q.dequeue();
 
-	assertEquals(q.count, 0);
-	assertEquals(q.size, 3);
+  assertEquals(q.count, 0);
+  assertEquals(q.size, 3);
 
   assertEquals(q.isEmpty, true);
 });

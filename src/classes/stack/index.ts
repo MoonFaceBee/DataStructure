@@ -1,28 +1,28 @@
 import IStack from "../../interfaces/stack.ts";
 
 class Stack<T> implements IStack<T> {
-	private top;
+  private top;
 
   //Array, Length
   private array: Array<T>;
 
-	//define size and front and rear
-	readonly size;
-  
-	constructor(size: number) {
+  //define size and front and rear
+  readonly size;
+
+  constructor(size: number) {
     this.array = new Array<T>(size);
-		this.size = size;
+    this.size = size;
     this.top = -1;
-	}
+  }
 
   get count(): number {
     return this.top + 1;
   }
 
-	//check if full
-	get isFull(): boolean {
-		return this.top + 1 === this.size;
-	}
+  //check if full
+  get isFull(): boolean {
+    return this.top + 1 === this.size;
+  }
 
   //Check if empty
   get isEmpty(): boolean {
@@ -31,11 +31,11 @@ class Stack<T> implements IStack<T> {
 
   //Push to array
   push(newItem: T): Stack<T> {
-		if (!this.isFull) {
-			this.top += 1;
+    if (!this.isFull) {
+      this.top += 1;
 
-			this.array[this.top] = newItem;
-		}
+      this.array[this.top] = newItem;
+    }
 
     return this;
   }
@@ -44,11 +44,11 @@ class Stack<T> implements IStack<T> {
   pop(): T | undefined {
     let value;
 
-		if (!this.isEmpty) {
+    if (!this.isEmpty) {
       value = this.array[this.top];
 
-			this.top -= 1;
-		}
+      this.top -= 1;
+    }
 
     return value;
   }
@@ -65,8 +65,8 @@ class Stack<T> implements IStack<T> {
   //Empty the array
   empty(): void {
     if (!this.isEmpty) {
-			this.top = -1;
-		}
+      this.top = -1;
+    }
   }
 
   contains(item: T): boolean {
