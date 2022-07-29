@@ -34,14 +34,14 @@ class CircularQueue<T> implements IQueue<T> {
   enqueue(item: T): IQueue<T> {
     if (!this.isFull) {
       if (this.rear + 1 === this.size && this.front > 0) {
-        this.rear = this.rear % this.size
+        this.rear = (this.rear + 1) % this.size;
       } else {
         this.rear += 1;
       }
 
-			if (this.front === -1) {
-				this.front += 1
-			}
+      if (this.front === -1) {
+        this.front += 1;
+      }
 
       this.array[this.rear] = item;
     }
@@ -82,9 +82,11 @@ class CircularQueue<T> implements IQueue<T> {
   }
 
   contains(item: T): boolean {
-    if (!this.isEmpty) {
-      if (this.front > this.rear) {
-      }
+    if (this.front < this.rear) {
+      return this.array.slice(this.front, this.rear + 1).includes(item);
+    } else {
+      return this.array.slice(this.front, this.size).includes(item) ||
+        this.array.slice(0, this.rear + 1).includes(item);
     }
   }
 }
