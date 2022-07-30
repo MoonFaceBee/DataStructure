@@ -6,7 +6,7 @@ type LinkedListNode = {
 class LinkedList {
 	first = null;
 
-	add(data: number) {
+	addToEnd(data: number) {
 		if (this.first === null) {
 			this.first = {data, next: null};
 		} else {
@@ -17,7 +17,12 @@ class LinkedList {
 			cursor.next = {data, next: null}
 		}
 	}
+
+	addToBeginning(data: number) {
+		const newNode = {data: data, next: this.first}
+		this.first = newNode
+	}
 }
 
 const ll = new LinkedList();
-ll.add(123)
+ll.addToEnd(123)
