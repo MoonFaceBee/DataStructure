@@ -3,15 +3,22 @@ import ILinkedList from "../../interfaces/linked_list.ts";
 type LinkedListNode = {
   data: ILinkedList<number>;
   next?: LinkedListNode;
-} | null;
+};
 
 class LinkedList<T> implements ILinkedList<T> {
-  head: LinkedListNode = null;
+  head = null;
 
-	traverse(index): LinkedListNode {
+  traverse(index: number): LinkedListNode {
+    let element: LinkedListNode = this.head;
+    const array: LinkedListNode[] = [];
 
-		return null
-	}
+    while (element !== null) {
+      array.push(element);
+      element = element.next;
+    }
+
+    return array[index];
+  }
 
   addToEnd(data: T) {
     if (this.head === null) {
@@ -24,7 +31,7 @@ class LinkedList<T> implements ILinkedList<T> {
       cursor.next = { data, next: null };
     }
 
-		return this
+    return this;
   }
 
   addToBeginning(data: T) {
@@ -46,6 +53,6 @@ const ll = new LinkedList();
 ll.addToEnd(123);
 ll.addToEnd(456);
 ll.addToEnd(789);
-ll.deleteFromBeginning()
-ll.addToBeginning(102)
-console.log(ll)
+// ll.deleteFromBeginning();
+// ll.addToBeginning(102);
+console.log(ll.traverse(3));

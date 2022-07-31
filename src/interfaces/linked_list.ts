@@ -1,5 +1,5 @@
 interface ILinkedList<T> {
-	traverse(index: number) : object | undefined
+  traverse(index: number): ILinkedList<T>;
   addToEnd(data: T): void;
   addToBeginning(data: T): void;
   deleteFromBeginning(): void;
