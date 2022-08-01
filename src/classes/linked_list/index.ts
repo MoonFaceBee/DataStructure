@@ -1,23 +1,30 @@
 import ILinkedList from "../../interfaces/linked_list.ts";
 
 type LinkedListNode = {
-  data: ILinkedList<number>;
-  next?: LinkedListNode;
+  data: ILinkedList<number> | null;
+  next?: LinkedListNode | null;
 };
 
 class LinkedList<T> implements ILinkedList<T> {
-  head = null;
+  head: LinkedListNode = { data: null, next: null };
 
-  traverse(index: number): LinkedListNode {
-    let element: LinkedListNode = this.head;
-    const array: LinkedListNode[] = [];
+  traverse(index: number): T {
+    let goal;
+    let element: LinkedListNode;
 
-    while (element !== null) {
-      array.push(element);
-      element = element.next;
-    }
+    element = this.head
 
-    return array[index];
+		let i = 0;
+		while (element.next !== null) {
+			element = element.next;
+			i++;
+
+			if (i === index) {
+				goal = element.data
+			}
+		}
+
+    return goal;
   }
 
   addToEnd(data: T) {
@@ -53,6 +60,5 @@ const ll = new LinkedList();
 ll.addToEnd(123);
 ll.addToEnd(456);
 ll.addToEnd(789);
-// ll.deleteFromBeginning();
-// ll.addToBeginning(102);
-console.log(ll.traverse(3));
+ll.deleteFromBeginning();
+ll.addToBeginning(102);
