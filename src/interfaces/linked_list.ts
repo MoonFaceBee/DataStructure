@@ -1,15 +1,17 @@
 interface ILinkedList<T> {
-	get(index: number): T | undefined;
+  get(index: number): T | undefined;
 
-	get length(): number;
+  get length(): number;
 
-	addToBeginning(data: T): void;
-	addTo(data: T, index: number) : void;
-	addToEnd(data: T): void;
+  addToBeginning(data: T): void;
+  addTo(data: T, index: number): void;
+  addToEnd(data: T): void;
 
   deleteFromBeginning(): void;
-	deleteFrom(index: number) : void;
-	deleteFromEnd(): void;
+  deleteFrom(index: number): void;
+  deleteFromEnd(): void;
+
+  includes(data: T): boolean;
 }
 
 export default ILinkedList;

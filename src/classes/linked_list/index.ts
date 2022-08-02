@@ -1,4 +1,3 @@
-// @ts-ignore
 import ILinkedList from "../../interfaces/linked_list.ts";
 
 type LinkedListNode<T> = {
@@ -7,54 +6,81 @@ type LinkedListNode<T> = {
 } | null;
 
 class LinkedList<T> implements ILinkedList<T> {
+  [index: number]: number | undefined
+
   head: LinkedListNode<T> = null;
 
-	private getNode(index: number): LinkedListNode<T> | undefined {
-		let cursor: LinkedListNode<T> = this.head;
+  constructor() {
+    const instance = this;
+    return new Proxy(instance, {
+      get(target, prop, receiver) {
+        if (typeof prop === "string" && /\d+/.test(prop as string)) {
+          return instance.get(parseInt(prop));
+        }
 
-		let i = 0;
-		while (cursor !== null) {
-			if (i === index) {
-				return cursor;
-			}
+        return Reflect.get(target, prop, receiver);
+      },
 
-			cursor = cursor.next;
-			i++;
-		}
-	}
-
-	get length(): number {
-		let cursor: LinkedListNode<T> = this.head;
-
-		let count = 0
-
-		while(cursor !== null) {
-			cursor = cursor.next
-			count++
-		}
-
-		return count
-	}
-
-	get(index: number): T | undefined {
-    return this.getNode(index)?.data
+      set(target, prop, value, receiver) {
+        if (typeof prop === "string" && /\d+/.test(prop as string)) {
+          const node = instance.getNode(parseInt(prop));
+          if (node) {
+            node.data = value;
+          }
+          return true;
+        } else {
+          return Reflect.set(target, prop, value, receiver);
+        }
+      },
+    });
   }
 
-	addToBeginning(data: T) {
-		this.head = { data: data, next: this.head };
-	}
+  private getNode(index: number): LinkedListNode<T> | undefined {
+    let cursor: LinkedListNode<T> = this.head;
 
-	addTo(data: T, index: number) {
-		if (index === 0) {
-			this.addToBeginning(data);
-		} else {
-			const prevNode = this.getNode(index - 1);
+    let i = 0;
+    while (cursor !== null) {
+      if (i === index) {
+        return cursor;
+      }
 
-			if (prevNode) {
-				prevNode.next = { data, next: prevNode.next};
-			}
-		}
-	}
+      cursor = cursor.next;
+      i++;
+    }
+  }
+
+  get length(): number {
+    let cursor: LinkedListNode<T> = this.head;
+
+    let count = 0;
+
+    while (cursor !== null) {
+      cursor = cursor.next;
+      count++;
+    }
+
+    return count;
+  }
+
+  get(index: number): T | undefined {
+    return this.getNode(index)?.data;
+  }
+
+  addToBeginning(data: T) {
+    this.head = { data: data, next: this.head };
+  }
+
+  addTo(data: T, index: number) {
+    if (index === 0) {
+      this.addToBeginning(data);
+    } else {
+      const prevNode = this.getNode(index - 1);
+
+      if (prevNode) {
+        prevNode.next = { data, next: prevNode.next };
+      }
+    }
+  }
 
   addToEnd(data: T) {
     if (!this.head) {
@@ -71,43 +97,57 @@ class LinkedList<T> implements ILinkedList<T> {
   }
 
   deleteFromBeginning(): void {
-		if (this.head?.next) {
-			this.head = this.head.next;
-		}
+    if (this.head?.next) {
+      this.head = this.head.next;
+    }
   }
 
-	deleteFrom(index: number): void {
-		if (index === 0) {
-			this.deleteFromBeginning()
-		} else {
-			const prevNode = this.getNode(index - 1);
+  deleteFrom(index: number): void {
+    if (index === 0) {
+      this.deleteFromBeginning();
+    } else {
+      const prevNode = this.getNode(index - 1);
 
-			if (prevNode) {
-				const currentNode = prevNode?.next;
+      if (prevNode) {
+        const currentNode = prevNode?.next;
 
-				if (currentNode) {
-					const nextNode = prevNode?.next?.next;
+        if (currentNode) {
+          const nextNode = prevNode?.next?.next;
 
-					if (nextNode) {
-						currentNode.next = null;
-						prevNode.next = nextNode;
-					} else {
-						prevNode.next = null;
-					}
-				}
-			}
-		}
-	}
+          if (nextNode) {
+            currentNode.next = null;
+            prevNode.next = nextNode;
+          } else {
+            prevNode.next = null;
+          }
+        }
+      }
+    }
+  }
 
   deleteFromEnd() {
-		let cursor: LinkedListNode<T> = this.head;
+    let cursor: LinkedListNode<T> = this.head;
 
-		while (cursor?.next?.next !== null) {
-			cursor = cursor!.next;
-		}
+    while (cursor?.next?.next !== null) {
+      cursor = cursor!.next;
+    }
 
-		cursor!.next = null;
-	}
+    cursor!.next = null;
+  }
+
+  includes(data: T): boolean {
+    let current = this.head;
+
+    while (current !== null) {
+      if (current.data === data) {
+        return true;
+      }
+
+      current = current.next;
+    }
+
+    return false;
+  }
 }
 
 export default LinkedList;
