@@ -1,34 +1,43 @@
+// @ts-ignore
 import ILinkedList from "../../interfaces/linked_list.ts";
 
 type LinkedListNode = {
-  data: ILinkedList<number> | null;
+  data: ILinkedList<number>;
   next?: LinkedListNode | null;
 };
 
 class LinkedList<T> implements ILinkedList<T> {
-  head: LinkedListNode = { data: null, next: null };
+  head: LinkedListNode;
 
-  traverse(index: number): T {
-    let goal;
-    let element: LinkedListNode;
-
-    element = this.head
+	private getNode(index: number): LinkedListNode | undefined {
+		let cursor: LinkedListNode = this.head;
 
 		let i = 0;
-		while (element.next !== null) {
-			element = element.next;
-			i++;
-
+		do {
 			if (i === index) {
-				goal = element.data
+				return cursor
 			}
-		}
 
-    return goal;
+			cursor = cursor.next;
+			i++;
+		} while (cursor !== null);
+	}
+
+	get(index: number): T {
+    return this.getNode(index)?.data
   }
 
+	addToBeginning(data: T) {
+		this.head = { data: data, next: this.head };
+	}
+
+	addTo(data: T, index: number) {
+		const insertedNext = this.getNode(index)
+		this.getNode(index - 1).next = {data: data, next: insertedNext}
+	}
+
   addToEnd(data: T) {
-    if (this.head === null) {
+    if (!this.head) {
       this.head = { data, next: null };
     } else {
       let cursor = this.head;
@@ -41,24 +50,29 @@ class LinkedList<T> implements ILinkedList<T> {
     return this;
   }
 
-  addToBeginning(data: T) {
-    this.head = { data: data, next: this.head };
-  }
-
   deleteFromBeginning(): void {
     this.head = this.head.next;
   }
 
-  //Traversal - access each element of the linked list
-  //Insertion - adds a new element to the linked list {beginning, middle or end}
-  //Deletion - removes the existing elements {beginning, end or from a particular position}
+	deleteFrom(index: number): void {
+		if (index === 0) {
+			this.deleteFromBeginning()
+		} else {
+			this.getNode(index - 1).next = this.getNode(index + 1)
+		}
+	}
+
+  deleteFromEnd() {
+		let cursor: LinkedListNode = this.head;
+
+		let i = 0;
+		do {
+			cursor = cursor.next;
+			i++;
+		} while (cursor !== null);
+
+		this.getNode(i - 2).next = null
+	}
 }
 
 export default LinkedList;
-
-const ll = new LinkedList();
-ll.addToEnd(123);
-ll.addToEnd(456);
-ll.addToEnd(789);
-ll.deleteFromBeginning();
-ll.addToBeginning(102);

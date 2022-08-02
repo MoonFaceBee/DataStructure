@@ -1,3 +1,4 @@
+// @ts-ignore
 import IQueue from "../../interfaces/queue.ts";
 
 class Queue<T> implements IQueue<T> {
