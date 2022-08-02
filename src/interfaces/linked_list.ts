@@ -1,5 +1,7 @@
 interface ILinkedList<T> {
-	get(index: number) : T;
+	get(index: number): T | undefined;
+
+	get length(): number;
 
 	addToBeginning(data: T): void;
 	addTo(data: T, index: number) : void;

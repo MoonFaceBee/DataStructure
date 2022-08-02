@@ -1,29 +1,42 @@
 // @ts-ignore
 import ILinkedList from "../../interfaces/linked_list.ts";
 
-type LinkedListNode = {
-  data: ILinkedList<number>;
-  next?: LinkedListNode | null;
-};
+type LinkedListNode<T> = {
+  data: T;
+  next: LinkedListNode<T> | null;
+} | null;
 
 class LinkedList<T> implements ILinkedList<T> {
-  head: LinkedListNode;
+  head: LinkedListNode<T> = null;
 
-	private getNode(index: number): LinkedListNode | undefined {
-		let cursor: LinkedListNode = this.head;
+	private getNode(index: number): LinkedListNode<T> | undefined {
+		let cursor: LinkedListNode<T> = this.head;
 
 		let i = 0;
-		do {
+		while (cursor !== null) {
 			if (i === index) {
-				return cursor
+				return cursor;
 			}
 
 			cursor = cursor.next;
 			i++;
-		} while (cursor !== null);
+		}
 	}
 
-	get(index: number): T {
+	get length(): number {
+		let cursor: LinkedListNode<T> = this.head;
+
+		let count = 0
+
+		while(cursor !== null) {
+			cursor = cursor.next
+			count++
+		}
+
+		return count
+	}
+
+	get(index: number): T | undefined {
     return this.getNode(index)?.data
   }
 
@@ -32,8 +45,15 @@ class LinkedList<T> implements ILinkedList<T> {
 	}
 
 	addTo(data: T, index: number) {
-		const insertedNext = this.getNode(index)
-		this.getNode(index - 1).next = {data: data, next: insertedNext}
+		if (index === 0) {
+			this.addToBeginning(data);
+		} else {
+			const prevNode = this.getNode(index - 1);
+
+			if (prevNode) {
+				prevNode.next = { data, next: prevNode.next};
+			}
+		}
 	}
 
   addToEnd(data: T) {
@@ -51,27 +71,42 @@ class LinkedList<T> implements ILinkedList<T> {
   }
 
   deleteFromBeginning(): void {
-    this.head = this.head.next;
+		if (this.head?.next) {
+			this.head = this.head.next;
+		}
   }
 
 	deleteFrom(index: number): void {
 		if (index === 0) {
 			this.deleteFromBeginning()
 		} else {
-			this.getNode(index - 1).next = this.getNode(index + 1)
+			const prevNode = this.getNode(index - 1);
+
+			if (prevNode) {
+				const currentNode = prevNode?.next;
+
+				if (currentNode) {
+					const nextNode = prevNode?.next?.next;
+
+					if (nextNode) {
+						currentNode.next = null;
+						prevNode.next = nextNode;
+					} else {
+						prevNode.next = null;
+					}
+				}
+			}
 		}
 	}
 
   deleteFromEnd() {
-		let cursor: LinkedListNode = this.head;
+		let cursor: LinkedListNode<T> = this.head;
 
-		let i = 0;
-		do {
-			cursor = cursor.next;
-			i++;
-		} while (cursor !== null);
+		while (cursor?.next?.next !== null) {
+			cursor = cursor!.next;
+		}
 
-		this.getNode(i - 2).next = null
+		cursor!.next = null;
 	}
 }
 
