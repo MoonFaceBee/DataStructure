@@ -1,6 +1,5 @@
 interface ITreeNode<T> {
-	addChild(data: T): void;
-	removeChild(index: number): void;
+  get height(): number;
 }
 
 export default ITreeNode;
