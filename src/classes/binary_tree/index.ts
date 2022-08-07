@@ -1,107 +1,112 @@
+import {IBinaryTree} from "../../interfaces/binary_tree.ts";
+
 class BinaryTreeNode<T> {
-	data: T;
-	left: BinaryTreeNode<T> = null;
-	right: BinaryTreeNode<T> = null;
+  data: T;
+  left: BinaryTreeNode<T> = null;
+  right: BinaryTreeNode<T> = null;
 
-	constructor(data: T) {
-		this.data = data;
-	}
+  constructor(data: T) {
+    this.data = data;
+  }
 
-	setLeft(data: T) {
-		this.left = new BinaryTreeNode<T>(data)
-	}
+  setLeft(data: T) {
+    this.left = new BinaryTreeNode<T>(data);
+  }
 
-	setRight(data: T) {
-		this.right = new BinaryTreeNode<T>(data)
-	}
+  setRight(data: T) {
+    this.right = new BinaryTreeNode<T>(data);
+  }
+
+  private heightOfNodeHelper(node: BinaryTreeNode<T>): number {
+    if (node === null) {
+      return -1;
+    }
+
+    const heightOfLeft = this.heightOfNodeHelper(node.left);
+    const heightOfRight = this.heightOfNodeHelper(node.right);
+
+    return Math.max(heightOfLeft, heightOfRight) + 1;
+  }
+
+  get height(): number {
+    return this.heightOfNodeHelper(this);
+  }
 }
 
-class BinaryTree<T> {
-	root: BinaryTreeNode<T> = null;
+class BinaryTree<T> implements IBinaryTree<T>{
+  root: BinaryTreeNode<T> = null;
 
-	constructor(rootData: T) {
-		this.root = new BinaryTreeNode<T>(rootData);
-	}
+  constructor(rootData: T) {
+    this.root = new BinaryTreeNode<T>(rootData);
+  }
 
-	private preorderTraverse(node: BinaryTreeNode<T>, visitor: (data: T) => void) {
-		visitor(node.data);
+  get height(): number {
+    return this.root.height;
+  }
 
-		if (node.left) {
-			this.preorderTraverse(node.left, visitor);
-		}
+  private preorderTraverse(
+    node: BinaryTreeNode<T>,
+    visitor: (data: T) => void,
+  ) {
+    visitor(node.data);
 
-		if (node.right) {
-			this.preorderTraverse(node.right, visitor);
-		}
-	}
+    if (node.left) {
+      this.preorderTraverse(node.left, visitor);
+    }
 
-	preorder(visitor: (data: T) => void) {
-		this.preorderTraverse(this.root, visitor);
-	}
+    if (node.right) {
+      this.preorderTraverse(node.right, visitor);
+    }
+  }
 
-	private postorderTraverse(node: BinaryTreeNode<T>, visitor: (data: T) => void) {
-		if (node.left) {
-			this.postorderTraverse(node.left, visitor)
-		}
+  preorder(visitor: (data: T) => void) {
+    this.preorderTraverse(this.root, visitor);
+  }
 
-		if (node.right) {
-			this.postorderTraverse(node.right, visitor)
-		}
+  private postorderTraverse(
+    node: BinaryTreeNode<T>,
+    visitor: (data: T) => void,
+  ) {
+    if (node.left) {
+      this.postorderTraverse(node.left, visitor);
+    }
 
-		visitor(node.data)
-	}
+    if (node.right) {
+      this.postorderTraverse(node.right, visitor);
+    }
 
-	postorder(visitor: (data: T) => void) {
-		this.postorderTraverse(this.root, visitor)
-	}
+    visitor(node.data);
+  }
 
-	private inorderTraverse(node: BinaryTreeNode<T>, visitor: (data: T) => void) {
-		if (node.left) {
-			this.inorderTraverse(node.left, visitor)
-		}
+  postorder(visitor: (data: T) => void) {
+    this.postorderTraverse(this.root, visitor);
+  }
 
-		visitor(node.data)
+  private inorderTraverse(node: BinaryTreeNode<T>, visitor: (data: T) => void) {
+    if (node.left) {
+      this.inorderTraverse(node.left, visitor);
+    }
 
-		if (node.right) {
-			this.inorderTraverse(node.right, visitor)
-		}
-	}
+    visitor(node.data);
 
-	inorder(visitor: (data: T) => void) {
-		this.inorderTraverse(this.root, visitor)
-	}
+    if (node.right) {
+      this.inorderTraverse(node.right, visitor);
+    }
+  }
+
+  inorder(visitor: (data: T) => void) {
+    this.inorderTraverse(this.root, visitor);
+  }
 }
 
+export default BinaryTree;
 
 
-const bt = new BinaryTree<number>(1);
 
-bt.root.setLeft(2)
-bt.root.setRight(3)
+//Todo: Depth of Node
+//Todo: Degree of Node
+//Todo: Create Forest
 
-bt.root.left.setLeft(4)
-bt.root.left.setRight(5)
-
-bt.root.right.setLeft(6)
-bt.root.right.setRight(7)
-
-bt.root.left.left.setRight(8);
-bt.root.right.left.setLeft(9);
-
-// console.log(JSON.stringify(bt, null, '  '));
-
-bt.preorder((data) => {
-	console.log(data)
-})
-
-console.log(' ')
-
-bt.postorder((data) => {
-	console.log(data)
-})
-
-console.log(' ')
-
-bt.inorder((data) => {
-	console.log(data)
-})
+//Todo: if Full Binary Tree
+//Todo: if Perfect Binary Tree
+//Todo: if Balanced Binary Tree
