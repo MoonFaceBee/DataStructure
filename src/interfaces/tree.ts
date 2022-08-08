@@ -1,5 +1,11 @@
-interface ITreeNode<T> {
+export interface ITree<T> {
   get height(): number;
 }
 
-export default ITreeNode;
+export interface ITreeNode<T> {
+  addChild(data: T): void;
+  removeChild(index: number): void;
+
+  get height(): number;
+  get depth(): number;
+}
