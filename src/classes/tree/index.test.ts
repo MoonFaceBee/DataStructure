@@ -12,7 +12,7 @@ Deno.test("Height Of Tree", () => {
   myTree.root.children[1].addChild(6);
   myTree.root.children[2].addChild(7);
 
-	assertEquals(myTree.height, 2)
+  assertEquals(myTree.height, 2);
 });
 
 Deno.test("Height Of Node", () => {
@@ -26,5 +26,5 @@ Deno.test("Height Of Node", () => {
   myTree.root.children[1].addChild(6);
   myTree.root.children[2].addChild(7);
 
-	assertEquals(myTree.root.children[0].height, 1)
+  assertEquals(myTree.root.children[0].height, 1);
 });
