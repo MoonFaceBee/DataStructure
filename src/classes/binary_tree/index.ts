@@ -1,20 +1,22 @@
-import {IBinaryTree} from "../../interfaces/binary_tree.ts";
+import { IBinaryTree, IBinaryTreeNode } from "../../interfaces/binary_tree.ts";
 
-class BinaryTreeNode<T> {
+class BinaryTreeNode<T> implements IBinaryTreeNode<T> {
   data: T;
-  left: BinaryTreeNode<T> = null;
-  right: BinaryTreeNode<T> = null;
+  binaryTree: BinaryTree<T>;
+  left: BinaryTreeNode<T> = null as any;
+  right: BinaryTreeNode<T> = null as any;
 
-  constructor(data: T) {
+  constructor(binaryTree: BinaryTree<T>, data: T) {
+    this.binaryTree = binaryTree;
     this.data = data;
   }
 
   setLeft(data: T) {
-    this.left = new BinaryTreeNode<T>(data);
+    this.left = new BinaryTreeNode<T>(this.binaryTree, data);
   }
 
   setRight(data: T) {
-    this.right = new BinaryTreeNode<T>(data);
+    this.right = new BinaryTreeNode<T>(this.binaryTree, data);
   }
 
   private heightOfNodeHelper(node: BinaryTreeNode<T>): number {
@@ -31,17 +33,46 @@ class BinaryTreeNode<T> {
   get height(): number {
     return this.heightOfNodeHelper(this);
   }
+
+  private depthOfNodeHelper(
+    root: BinaryTreeNode<T>,
+    node: BinaryTreeNode<T>,
+  ): number {
+    let d = -1;
+
+    if (node === null) {
+      return -1;
+    }
+
+    if (
+      (root === node) ||
+      (root.left && ((d = this.depthOfNodeHelper(root.left, node)) >= 0)) ||
+      root.right && ((d = this.depthOfNodeHelper(root.right, node)) >= 0)
+    ) {
+      return d += 1;
+    }
+
+    return d;
+  }
+
+  get depth(): number {
+    return this.depthOfNodeHelper(this.binaryTree.root, this);
+  }
 }
 
-class BinaryTree<T> implements IBinaryTree<T>{
-  root: BinaryTreeNode<T> = null;
+class BinaryTree<T> implements IBinaryTree<T> {
+  root: BinaryTreeNode<T>;
 
   constructor(rootData: T) {
-    this.root = new BinaryTreeNode<T>(rootData);
+    this.root = new BinaryTreeNode<T>(this, rootData);
   }
 
   get height(): number {
     return this.root.height;
+  }
+
+  get depth(): number {
+    return this.root.depth;
   }
 
   private preorderTraverse(
@@ -101,9 +132,6 @@ class BinaryTree<T> implements IBinaryTree<T>{
 
 export default BinaryTree;
 
-
-
-//Todo: Depth of Node
 //Todo: Degree of Node
 //Todo: Create Forest
 
