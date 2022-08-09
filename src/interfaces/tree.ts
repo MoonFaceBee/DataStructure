@@ -8,4 +8,5 @@ export interface ITreeNode<T> {
 
   get height(): number;
   get depth(): number;
+  get degree(): number;
 }

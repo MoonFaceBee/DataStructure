@@ -1,6 +1,6 @@
 import { ITree, ITreeNode } from "../../interfaces/tree.ts";
 
-class TreeNode<T> implements ITreeNode<T> {
+export class TreeNode<T> implements ITreeNode<T> {
   data: T;
   tree: Tree<T>;
   children: TreeNode<T>[] = [];
@@ -34,27 +34,30 @@ class TreeNode<T> implements ITreeNode<T> {
   }
 
   private depthOfNodeHelper(node: TreeNode<T>): number {
-		if (node === this) {
-			return 0;
-		} else if (node.children.length === 0) {
-			return -1;
-		}
+    if (node === this) {
+      return 0;
+    } else if (node.children.length === 0) {
+      return -1;
+    }
 
-		const childDepths = node.children.map((child) => this.depthOfNodeHelper(child));
+    const childDepths = node.children.map((child) =>
+      this.depthOfNodeHelper(child)
+    );
 
-		if (childDepths.every((depth) => depth === -1)) {
-			return -1;
-		}
+    if (childDepths.every((depth) => depth === -1)) {
+      return -1;
+    }
 
-		return Math.max(...childDepths) + 1
-	}
+    return Math.max(...childDepths) + 1;
+  }
 
   get depth(): number {
     return this.depthOfNodeHelper(this.tree.root);
   }
 
-  //Todo: Degree of Node
-  //Todo: Create Forest
+  get degree(): number {
+    return this.children.length;
+  }
 }
 
 class Tree<T> implements ITree<T> {

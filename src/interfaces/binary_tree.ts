@@ -4,6 +4,12 @@ export interface IBinaryTree<T> {
   inorder(visitor: (data: T) => void): void;
 
   get height(): number;
+  get depth(): number;
+
+  get isFull(): boolean;
+  get isPerfect(): boolean;
+  get isComplete(): boolean;
+  get isBalanced(): boolean;
 }
 
 export interface IBinaryTreeNode<T> {
@@ -12,4 +18,7 @@ export interface IBinaryTreeNode<T> {
 
   get height(): number;
   get depth(): number;
+  get degree(): number;
+
+  get isLeaf(): boolean;
 }
