@@ -2,21 +2,21 @@ import { IBinaryTree, IBinaryTreeNode } from "../../interfaces/binary_tree.ts";
 
 class BinaryTreeNode<T> implements IBinaryTreeNode<T> {
   data: T;
-  binaryTree: BinaryTree<T>;
+  tree: BinaryTree<T>;
   left: BinaryTreeNode<T> = null as any;
   right: BinaryTreeNode<T> = null as any;
 
   constructor(binaryTree: BinaryTree<T>, data: T) {
-    this.binaryTree = binaryTree;
+    this.tree = binaryTree;
     this.data = data;
   }
 
   setLeft(data: T) {
-    this.left = new BinaryTreeNode<T>(this.binaryTree, data);
+    this.left = new BinaryTreeNode<T>(this.tree, data);
   }
 
   setRight(data: T) {
-    this.right = new BinaryTreeNode<T>(this.binaryTree, data);
+    this.right = new BinaryTreeNode<T>(this.tree, data);
   }
 
   private heightOfNodeHelper(node: BinaryTreeNode<T>): number {
@@ -34,29 +34,25 @@ class BinaryTreeNode<T> implements IBinaryTreeNode<T> {
     return this.heightOfNodeHelper(this);
   }
 
-  private depthOfNodeHelper(
-    root: BinaryTreeNode<T>,
-    node: BinaryTreeNode<T>,
-  ): number {
-    let d = -1;
+  private depthOfNodeHelper(node: BinaryTreeNode<T>): number {
+		if (node === this) {
+			return 0;
+		} else if (!node.left && !node.right) {
+			return -1;
+		}
 
-    if (node === null) {
-      return -1;
-    }
+		const leftDepth = node.left ? this.depthOfNodeHelper(node.left) : -1;
+		const rightDepth = node.right ? this.depthOfNodeHelper(node.right) : -1;
 
-    if (
-      (root === node) ||
-      (root.left && ((d = this.depthOfNodeHelper(root.left, node)) >= 0)) ||
-      root.right && ((d = this.depthOfNodeHelper(root.right, node)) >= 0)
-    ) {
-      return d += 1;
-    }
+		if (leftDepth === -1 && rightDepth === -1) {
+			return -1;
+		}
 
-    return d;
+		return Math.max(leftDepth, rightDepth) + 1
   }
 
   get depth(): number {
-    return this.depthOfNodeHelper(this.binaryTree.root, this);
+    return this.depthOfNodeHelper(this.tree.root);
   }
 }
 
