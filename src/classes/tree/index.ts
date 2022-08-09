@@ -33,32 +33,27 @@ class TreeNode<T> implements ITreeNode<T> {
     return this.heightOfNodeHelper(this);
   }
 
-  private depthOfNodeHelper(root: TreeNode<T>, node: TreeNode<T>): number {
-    let d = -1;
-
-    if (node === null) {
-      return -1;
-    }
-
-		const childrenDepth = root.children.map((child) => this.depthOfNodeHelper(child, node ))
-
-
-		if (root === node) {
-			for (let i = 0; i < childrenDepth.length; i++) {
-				d += childrenDepth[i]
-			}
+  private depthOfNodeHelper(node: TreeNode<T>): number {
+		if (node === this) {
+			return 0;
+		} else if (node.children.length === 0) {
+			return -1;
 		}
 
-		return d
-  }
+		const childDepths = node.children.map((child) => this.depthOfNodeHelper(child));
+
+		if (childDepths.every((depth) => depth === -1)) {
+			return -1;
+		}
+
+		return Math.max(...childDepths) + 1
+	}
 
   get depth(): number {
-    return this.depthOfNodeHelper(this.tree.root, this);
+    return this.depthOfNodeHelper(this.tree.root);
   }
 
-  //Todo: Depth of Node
   //Todo: Degree of Node
-
   //Todo: Create Forest
 }
 
@@ -75,15 +70,3 @@ class Tree<T> implements ITree<T> {
 }
 
 export default Tree;
-
-const myTree = new Tree(1);
-
-myTree.root.addChild(2);
-myTree.root.addChild(3);
-myTree.root.addChild(4);
-
-myTree.root.children[0].addChild(5);
-myTree.root.children[1].addChild(6);
-myTree.root.children[2].addChild(7);
-
-console.log(myTree.root.children[0].depth)
