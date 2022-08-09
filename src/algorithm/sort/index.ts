@@ -30,12 +30,12 @@ quickSort(array);
 console.timeEnd("Quick Sort");
 
 const randomKey = array[Math.floor(Math.random() * array.length)];
-console.log(randomKey)
+console.log(randomKey);
 
 console.time("Linear Search");
-console.log('linearSearch', linearSearch(array, randomKey));
+console.log("linearSearch", linearSearch(array, randomKey));
 console.timeEnd("Linear Search");
 
 console.time("Binary Search");
-console.log('binarySearch', binarySearch(sortedArray, randomKey));
+console.log("binarySearch", binarySearch(sortedArray, randomKey));
 console.timeEnd("Binary Search");

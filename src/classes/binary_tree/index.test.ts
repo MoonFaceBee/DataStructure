@@ -91,7 +91,7 @@ Deno.test("Is Perfect", () => {
 
   assertEquals(myTree.isPerfect, true);
 
-	myTree.root.right?.right.setRight(8);
+  myTree.root.right?.right.setRight(8);
 
   assertEquals(myTree.isPerfect, false);
 });
@@ -104,7 +104,7 @@ Deno.test("Is Balanced", () => {
   myTree.root.left?.setLeft(4);
   myTree.root.left?.setRight(5);
 
-	assertEquals(myTree.isBalanced, true);
+  assertEquals(myTree.isBalanced, true);
 
   myTree.root.left.right?.setLeft(6);
 
@@ -120,9 +120,9 @@ Deno.test("Is Complete", () => {
   myTree.root.left?.setRight(5);
   myTree.root.right.setLeft(6);
 
-	assertEquals(myTree.isComplete, true);
+  assertEquals(myTree.isComplete, true);
 
   myTree.root.left.left.setRight(7);
 
-	assertEquals(myTree.isComplete, false);
+  assertEquals(myTree.isComplete, false);
 });

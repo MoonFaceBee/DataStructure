@@ -133,15 +133,15 @@ class BinaryTree<T> implements IBinaryTree<T> {
     this.inorderTraverse(this.root, visitor);
   }
 
-	get count(): number {
-		let c = 0;
+  get count(): number {
+    let c = 0;
 
-		this.inorderTraverse(this.root, () => {
-			c++;
-		});
+    this.inorderTraverse(this.root, () => {
+      c++;
+    });
 
-		return c;
-	}
+    return c;
+  }
 
   private isFullHelper(node: BinaryTreeNode<T>): boolean {
     return ((node.left === null && node.right === null) ||
@@ -164,59 +164,67 @@ class BinaryTree<T> implements IBinaryTree<T> {
     return this.isPerfectHelper(this.root);
   }
 
-	private extractLevels(): BinaryTreeNode<T>[][] {
-		const nodesCount = this.count;
-		const levels = [[this.root]];
+  private extractLevels(): BinaryTreeNode<T>[][] {
+    const nodesCount = this.count;
+    const levels = [[this.root]];
 
-		let levelIndex = 0;
-		let processedNodes = 1;
+    let levelIndex = 0;
+    let processedNodes = 1;
 
-		while(processedNodes < nodesCount) {
-			levels.push([]);
+    while (processedNodes < nodesCount) {
+      levels.push([]);
 
-			levels[levelIndex].forEach((node) => {
-				if (node.left) {
-					levels[levelIndex + 1].push(node.left);
-					processedNodes++;
-				}
+      levels[levelIndex].forEach((node) => {
+        if (node.left) {
+          levels[levelIndex + 1].push(node.left);
+          processedNodes++;
+        }
 
-				if (node.right) {
-					levels[levelIndex + 1].push(node.right);
-					processedNodes++;
-				}
-			});
+        if (node.right) {
+          levels[levelIndex + 1].push(node.right);
+          processedNodes++;
+        }
+      });
 
-			levelIndex++;
-		}
+      levelIndex++;
+    }
 
-		return levels;
-	}
+    return levels;
+  }
 
-	private isCompleteHelper(node: BinaryTreeNode<T>, index: number, array: BinaryTreeNode<T>[]): boolean {
-		if (node === null) {
-			return true;
-		}
+  private isCompleteHelper(
+    node: BinaryTreeNode<T>,
+    index: number,
+    array: BinaryTreeNode<T>[],
+  ): boolean {
+    if (node === null) {
+      return true;
+    }
 
-		if (index >= array.length) {
-			return false;
-		}
+    if (index >= array.length) {
+      return false;
+    }
 
-		return this.isCompleteHelper(node.left, index * 2 + 1, array) && this.isCompleteHelper(node.right, index * 2 + 2, array);
-	}
+    return this.isCompleteHelper(node.left, index * 2 + 1, array) &&
+      this.isCompleteHelper(node.right, index * 2 + 2, array);
+  }
 
   get isComplete(): boolean {
-		const levels = this.extractLevels();
-		const array = levels.flat();
+    const levels = this.extractLevels();
+    const array = levels.flat();
 
-		if (array.length >= 2 ** levels.length - 1) {
-			return false;
-		}
+    if (array.length >= 2 ** levels.length - 1) {
+      return false;
+    }
 
-		return this.isCompleteHelper(this.root, 0, array);
+    return this.isCompleteHelper(this.root, 0, array);
   }
 
   get isBalanced(): boolean {
-    return Math.abs((this.root.left ? this.root.left.height : 0) - (this.root.right ? this.root.right.height : 0)) <= 1;
+    return Math.abs(
+      (this.root.left ? this.root.left.height : 0) -
+        (this.root.right ? this.root.right.height : 0),
+    ) <= 1;
   }
 }
 
