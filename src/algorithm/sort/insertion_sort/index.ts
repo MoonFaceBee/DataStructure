@@ -1,4 +1,4 @@
-function InsertionsSort(array: any[]) {
+function insertionsSort(array: any[]) {
   const tempArray = [...array];
 
   for (let i = 1; i < tempArray.length; i++) {
@@ -22,4 +22,4 @@ function InsertionsSort(array: any[]) {
   return tempArray;
 }
 
-export default InsertionsSort;
+export default insertionsSort;

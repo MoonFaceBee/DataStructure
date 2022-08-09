@@ -1,4 +1,4 @@
-function SelectionSort(array: any[]) {
+function selectionSort(array: any[]) {
   const tempArray = [...array];
 
   for (let i = 0; i < tempArray.length; i++) {
@@ -18,7 +18,7 @@ function SelectionSort(array: any[]) {
   return tempArray;
 }
 
-export function SelectionSort2(array: any[]) {
+export function selectionSort2(array: any[]) {
   const tempArray = [...array];
 
   for (let i = 0; i < Math.floor(tempArray.length / 2); i++) {
@@ -52,4 +52,4 @@ export function SelectionSort2(array: any[]) {
   return tempArray;
 }
 
-export default SelectionSort;
+export default selectionSort;

@@ -1,4 +1,4 @@
-function BubbleSort(array: any[]) {
+function bubbleSort(array: any[]) {
   const tempArray = [...array];
 
   for (let i = 0; i < tempArray.length - 1; i++) {
@@ -14,4 +14,4 @@ function BubbleSort(array: any[]) {
   return tempArray;
 }
 
-export default BubbleSort;
+export default bubbleSort;
