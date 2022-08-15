@@ -67,8 +67,12 @@ export class BinaryTreeNode<T> implements IBinaryTreeNode<T> {
 class BinaryTree<T> implements IBinaryTree<T> {
   root: BinaryTreeNode<T>;
 
-  constructor(rootData: T) {
-    this.root = new BinaryTreeNode<T>(this, rootData);
+  constructor(rootData?: T) {
+		if (rootData !== undefined) {
+			this.root = new BinaryTreeNode<T>(this, rootData);
+		} else {
+			this.root = null as any;
+		}
   }
 
   get height(): number {
@@ -226,6 +230,12 @@ class BinaryTree<T> implements IBinaryTree<T> {
         (this.root.right ? this.root.right.height : 0),
     ) <= 1;
   }
+
+	print() {
+		const levels = this.extractLevels().map(level=>level.map(node => node.data));
+
+		console.log(JSON.stringify(levels));
+	}
 }
 
 export default BinaryTree;
