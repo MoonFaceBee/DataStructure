@@ -28,22 +28,34 @@ class BinarySearchTree<T> extends BinaryTree<T> {
 			this.insertNodeHelper(data, this.root)
 		}
 	}
+
+	private searchNodeHelper(data: T, node: BinaryTreeNode<T>): BinaryTreeNode<T> | undefined {
+		if (data < node.data) {
+			if (node.left) {
+				return this.searchNodeHelper(data, node.left)
+			} else {
+				return undefined
+			}
+		}
+
+		if (data > node.data) {
+			if (node.right) {
+				return this.searchNodeHelper(data, node.right)
+			} else {
+				return undefined
+			}
+		}
+
+		return node
+	}
+
+	search(data: T): BinaryTreeNode<T> | undefined {
+		if (this.root === null) {
+			return undefined
+		} else {
+			return this.searchNodeHelper(data, this.root)
+		}
+	}
 }
 
 export default BinarySearchTree
-
-const bst = new BinarySearchTree<number>();
-bst.insert(8)
-bst.insert(2)
-bst.insert(10)
-bst.insert(5)
-bst.insert(1)
-
-console.log(bst.root.data)
-console.log(bst.root.left.data)
-console.log(bst.root.right.data)
-console.log(bst.root.left.right.data)
-console.log(bst.root.left.left.data)
-
-
-bst.print();
