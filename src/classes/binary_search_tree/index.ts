@@ -1,6 +1,7 @@
 import BinaryTree, {BinaryTreeNode} from "../binary_tree/index.ts";
+import {IBinarySearchTree} from "../../interfaces/binary_search_tree.ts";
 
-class BinarySearchTree<T> extends BinaryTree<T> {
+class BinarySearchTree<T> extends BinaryTree<T> implements IBinarySearchTree<T>{
 	constructor() {
 		super();
 	}
