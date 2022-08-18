@@ -62,6 +62,25 @@ class BinarySearchTree<T> extends BinaryTree<T>
     }
   }
 
+  inOrderSuccessor(data: T, node: BinaryTreeNode<T>): BinaryTreeNode<T> | null {
+    if (node === null || data === null) {
+      return null;
+    }
+
+    let temp = null;
+
+    while (node !== null) {
+      if (node.data <= data) {
+        node = node.right;
+      } else {
+        temp = node;
+        node = node.left;
+      }
+    }
+
+    return temp;
+  }
+
   private deleteNodeHelper(data: T, node: BinaryTreeNode<T> | null): void {
     if (data === node?.data) {
       if (node.right && !node.left) {
@@ -69,7 +88,15 @@ class BinarySearchTree<T> extends BinaryTree<T>
       } else if (!node.right && node.left) {
         node = node.left;
       } else if (node.right && node.left) {
-        //both right and left
+        const inorderSuccessor = this.inOrderSuccessor(data, node)
+				if (inorderSuccessor) {
+					data = inorderSuccessor.data
+					this.delete(node.right.data)
+					//todo: data doesnt change
+
+				} else {
+					return
+				}
       } else {
         node = null;
       }
@@ -125,6 +152,6 @@ t.insert(8);
 t.insert(1);
 t.insert(9);
 
-t.delete(3);
+t.delete(3)
 
 console.log(t);
