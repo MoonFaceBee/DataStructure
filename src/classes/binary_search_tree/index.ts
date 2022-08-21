@@ -88,15 +88,14 @@ class BinarySearchTree<T> extends BinaryTree<T>
       } else if (!node.right && node.left) {
         node = node.left;
       } else if (node.right && node.left) {
-        const inorderSuccessor = this.inOrderSuccessor(data, node)
-				if (inorderSuccessor) {
-					data = inorderSuccessor.data
-					this.delete(node.right.data)
-					//todo: data doesnt change
-
-				} else {
-					return
-				}
+        const inorderSuccessor = this.inOrderSuccessor(data, node);
+        if (inorderSuccessor) {
+          data = inorderSuccessor.data;
+          this.delete(node.right.data);
+          //todo: data doesnt change
+        } else {
+          return;
+        }
       } else {
         node = null;
       }
@@ -152,6 +151,6 @@ t.insert(8);
 t.insert(1);
 t.insert(9);
 
-t.delete(3)
+t.delete(3);
 
 console.log(t);
