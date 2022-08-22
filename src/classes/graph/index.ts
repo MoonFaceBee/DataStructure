@@ -30,7 +30,7 @@ export class GraphNode<T> implements IGraphNode<T> {
 	}
 }
 
-class Graph<T> implements IGraph<T> {
+export class Graph<T> implements IGraph<T> {
   nodes: GraphNode<T>[] = [];
 
   add(node: GraphNode<T>): void {
@@ -82,22 +82,3 @@ class Graph<T> implements IGraph<T> {
 		return list
 	}
 }
-
-const n1 = new GraphNode(1);
-const n2 = new GraphNode(2);
-const n3 = new GraphNode(3);
-const n4 = new GraphNode(4);
-
-n1.link(n2);
-n1.link(n3);
-n1.link(n4);
-n3.link(n4);
-
-const g = new Graph();
-g.add(n1);
-g.add(n2);
-g.add(n3);
-g.add(n4);
-
-console.log(g.adjacencyMatrix());
-console.log(g.adjacencyList());
