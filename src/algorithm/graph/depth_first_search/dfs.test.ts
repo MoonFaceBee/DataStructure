@@ -1,6 +1,6 @@
 import {assertEquals} from "https://deno.land/std@0.148.0/testing/asserts.ts";
-import dfs from "./dfs.ts";
-import {Graph, GraphNode} from "../../classes/graph/index.ts";
+import depthFirstSearch from "./dfs.ts";
+import {Graph, GraphNode} from "../../../classes/graph/index.ts";
 
 Deno.test("DFS Path Finding", () => {
 	const n1 = new GraphNode(1);
@@ -19,6 +19,6 @@ Deno.test("DFS Path Finding", () => {
 	graph.add(n3);
 	graph.add(n4);
 
-	assertEquals(dfs(n1, n3), [n1, n4, n3]);
-	assertEquals(dfs(n1, n4), [n1, n4]);
+	assertEquals(depthFirstSearch(n1, n3), [n1, n4, n3]);
+	assertEquals(depthFirstSearch(n1, n4), [n1, n4]);
 });

@@ -1,6 +1,6 @@
-import {GraphNode} from "../../classes/graph/index.ts";
+import {GraphNode} from "../../../classes/graph/index.ts";
 
-function dfs<T>(start: GraphNode<T>, goal: GraphNode<T>): GraphNode<T>[] {
+function depthFirstSearch<T>(start: GraphNode<T>, goal: GraphNode<T>): GraphNode<T>[] {
 	if (start === goal) {
 		return [start]
 	}
@@ -33,4 +33,4 @@ function dfs<T>(start: GraphNode<T>, goal: GraphNode<T>): GraphNode<T>[] {
 	return []
 }
 
-export default dfs;
+export default depthFirstSearch;
