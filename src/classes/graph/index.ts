@@ -2,10 +2,12 @@ import { IGraph, IGraphNode } from "../../interfaces/graph.ts";
 import LinkedList from "../linked_list/index.ts";
 
 export class GraphNode<T> implements IGraphNode<T> {
+	id: symbol;
   value: T;
   links: GraphNode<T>[] = [];
 
   constructor(value: T) {
+		this.id = Symbol(`${value}`)
     this.value = value;
   }
 
