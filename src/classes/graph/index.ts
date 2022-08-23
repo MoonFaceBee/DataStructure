@@ -4,6 +4,7 @@ import LinkedList from "../linked_list/index.ts";
 export class GraphNode<T> implements IGraphNode<T> {
   id: symbol;
   value: T;
+  weights: Record<symbol, number> = {};
   links: GraphNode<T>[] = [];
 
   constructor(value: T) {
@@ -11,19 +12,28 @@ export class GraphNode<T> implements IGraphNode<T> {
     this.value = value;
   }
 
-  link(node: GraphNode<T>, backlink = true): void {
+  link(
+    node: GraphNode<T>,
+    weight = 0,
+    backlink = true,
+    backlinkWeight: number | null = null,
+  ): void {
     this.links.push(node);
+    this.weights[node.id] = weight;
 
     if (backlink) {
       node.links.push(this);
+      node.weights[this.id] = backlinkWeight ?? weight;
     }
   }
 
   unlink(node: GraphNode<T>, backlink = true): void {
     this.links = this.links.filter((n) => n !== node);
+    delete this.weights[node.id];
 
     if (backlink) {
       node.links = node.links.filter((n) => n !== this);
+      delete node.weights[this.id];
     }
   }
 
