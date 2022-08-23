@@ -2,12 +2,12 @@ import { IGraph, IGraphNode } from "../../interfaces/graph.ts";
 import LinkedList from "../linked_list/index.ts";
 
 export class GraphNode<T> implements IGraphNode<T> {
-	id: symbol;
+  id: symbol;
   value: T;
   links: GraphNode<T>[] = [];
 
   constructor(value: T) {
-		this.id = Symbol(`${value}`)
+    this.id = Symbol(`${value}`);
     this.value = value;
   }
 
@@ -27,9 +27,9 @@ export class GraphNode<T> implements IGraphNode<T> {
     }
   }
 
-	linksTo(node: GraphNode<T>): boolean {
-		return this.links.includes(node);
-	}
+  linksTo(node: GraphNode<T>): boolean {
+    return this.links.includes(node);
+  }
 }
 
 export class Graph<T> implements IGraph<T> {
@@ -49,38 +49,40 @@ export class Graph<T> implements IGraph<T> {
     }
   }
 
-	adjacencyMatrix(): number[][] {
-		const size = this.nodes.length
+  adjacencyMatrix(): number[][] {
+    const size = this.nodes.length;
 
-		const matrix = new Array(size).fill(null).map(() => new Array(size).fill(0))
+    const matrix = new Array(size).fill(null).map(() =>
+      new Array(size).fill(0)
+    );
 
-		for (let i = 0; i < size; i++) {
-			for (let j = 0; j < size; j++) {
-				if (this.nodes[i].linksTo(this.nodes[j])) {
-					matrix[i][j] = 1
-				}
-			}
-		}
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        if (this.nodes[i].linksTo(this.nodes[j])) {
+          matrix[i][j] = 1;
+        }
+      }
+    }
 
-		return matrix
-	}
+    return matrix;
+  }
 
-	adjacencyList(): LinkedList<number>[] {
-		const size = this.nodes.length
-		const list: LinkedList<number>[] = []
+  adjacencyList(): LinkedList<number>[] {
+    const size = this.nodes.length;
+    const list: LinkedList<number>[] = [];
 
-		for (let i = 0; i < size; i++) {
-			const ll = new LinkedList<number>()
+    for (let i = 0; i < size; i++) {
+      const ll = new LinkedList<number>();
 
-			for (let j = 0; j < size; j++) {
-				if (this.nodes[i].linksTo(this.nodes[j])) {
-					ll.addToEnd(j)
-				}
-			}
+      for (let j = 0; j < size; j++) {
+        if (this.nodes[i].linksTo(this.nodes[j])) {
+          ll.addToEnd(j);
+        }
+      }
 
-			list.push(ll)
-		}
+      list.push(ll);
+    }
 
-		return list
-	}
+    return list;
+  }
 }

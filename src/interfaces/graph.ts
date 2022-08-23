@@ -5,7 +5,7 @@ export interface IGraphNode<T> {
   link(node: GraphNode<T>, backlink?: boolean): void;
   unlink(node: GraphNode<T>, backlink?: boolean): void;
 
-	linksTo(node: GraphNode<T>): boolean;
+  linksTo(node: GraphNode<T>): boolean;
 }
 
 export interface IGraph<T> {
