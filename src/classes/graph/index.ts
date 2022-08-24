@@ -1,15 +1,20 @@
 import { IGraph, IGraphNode } from "../../interfaces/graph.ts";
 import LinkedList from "../linked_list/index.ts";
 
+type TCoords = { x: number; y: number; z?: number };
+
 export class GraphNode<T> implements IGraphNode<T> {
   id: symbol;
   value: T;
+  coords?: TCoords;
   weights: Record<symbol, number> = {};
+  distances: Record<symbol, number> = {};
   links: GraphNode<T>[] = [];
 
-  constructor(value: T) {
+  constructor(value: T, coords?: TCoords) {
     this.id = Symbol(`${value}`);
     this.value = value;
+    this.coords = coords;
   }
 
   link(
@@ -19,11 +24,24 @@ export class GraphNode<T> implements IGraphNode<T> {
     backlinkWeight: number | null = null,
   ): void {
     this.links.push(node);
+
+    let distance = 1;
+
+    if (this.coords && node.coords) {
+      distance = Math.hypot(
+        this.coords.x - node.coords.x,
+        this.coords.y - node.coords.y,
+        (this.coords.z ?? 0) - (node.coords.z ?? 0),
+      );
+    }
+
     this.weights[node.id] = weight;
+    this.distances[node.id] = distance;
 
     if (backlink) {
       node.links.push(this);
       node.weights[this.id] = backlinkWeight ?? weight;
+      node.distances[node.id] = distance;
     }
   }
 
