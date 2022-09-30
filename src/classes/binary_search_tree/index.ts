@@ -3,10 +3,6 @@ import { IBinarySearchTree } from "../../interfaces/binary_search_tree.ts";
 
 class BinarySearchTree<T> extends BinaryTree<T>
   implements IBinarySearchTree<T> {
-  constructor() {
-    super();
-  }
-
   private insertNodeHelper(data: T, node: BinaryTreeNode<T>) {
     if (data <= node.data) {
       if (node.left) {
@@ -82,56 +78,19 @@ class BinarySearchTree<T> extends BinaryTree<T>
   }
 
   private deleteNodeHelper(data: T, node: BinaryTreeNode<T> | null): void {
-    if (data === node?.data) {
-      if (node.right && !node.left) {
-        node = node.right;
-      } else if (!node.right && node.left) {
-        node = node.left;
-      } else if (node.right && node.left) {
-        const inorderSuccessor = this.inOrderSuccessor(data, node);
-        if (inorderSuccessor) {
-          data = inorderSuccessor.data;
-          this.delete(node.right.data);
-          //todo: data doesnt change
-        } else {
-          return;
-        }
-      } else {
-        node = null;
-      }
-    }
-
-    if (node && data > node.data && node.right) {
-      if (data === node.right.data && node.right.height === 0) {
-        node.right = null;
-      } else if (data === node.right.data && node.right.height > 0) {
-        if (node.right.right && !node.right.left) {
-          node.right = node.right.right;
-        } else if (!node.right.right && node.right.left) {
-          node.right = node.right.left;
-        } else {
-          //both right and left
-        }
-      } else {
-        this.deleteNodeHelper(data, node.right);
-      }
-    }
-
-    if (node && data < node.data && node.left) {
-      if (data === node.left.data && node.left.height === 0) {
-        node.left = null;
-      } else if (data === node.left.data && node.left.height > 0) {
-        if (node.left.right && !node.left.left) {
-          node.left = node.left.right;
-        } else if (!node.left.right && node.left.left) {
-          node.left = node.left.left;
-        } else {
-          //both right and left
-        }
-      } else {
-        this.deleteNodeHelper(data, node.left);
-      }
-    }
+    if (node.data) {
+			if (data === node.data) {
+				if (node.height === 0) {
+					node = null;
+				}
+			} else if (data > node.data) {
+				this.deleteNodeHelper(data, node.right);
+			} else if (data < node.data) {
+				this.deleteNodeHelper(data, node.left);
+			}
+		} else {
+			return
+		}
   }
 
   delete(data: T): void {
@@ -143,13 +102,12 @@ export default BinarySearchTree;
 
 const t = new BinarySearchTree();
 
-t.insert(3);
-t.insert(4);
-t.insert(6);
-t.insert(2);
 t.insert(8);
-t.insert(1);
-t.insert(9);
+t.insert(3);
+t.insert(10);
+// t.insert(1);
+// t.insert(6);
+// t.insert(4);
 
 t.delete(3);
 
