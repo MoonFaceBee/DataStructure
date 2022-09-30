@@ -78,10 +78,25 @@ class BinarySearchTree<T> extends BinaryTree<T>
   }
 
   private deleteNodeHelper(data: T, node: BinaryTreeNode<T> | null): void {
-    if (node.data) {
+    if (node && node.data && data) {
 			if (data === node.data) {
-				if (node.height === 0) {
+				if (node.isLeaf) {
 					node = null;
+				} else if (node.right && !node.left) {
+					node = node.right
+					node.right = null as any
+				} else if (node.left && !node.right) {
+					node = node.left
+					node.left = null as any
+				} else if(node.left && node.right) {
+					const inOrderSuccessor = this.inOrderSuccessor(data, node)
+
+					if (inOrderSuccessor && inOrderSuccessor.data) {
+						node.data = inOrderSuccessor.data
+						inOrderSuccessor.data = null as any
+					} else {
+						return;
+					}
 				}
 			} else if (data > node.data) {
 				this.deleteNodeHelper(data, node.right);
@@ -99,16 +114,3 @@ class BinarySearchTree<T> extends BinaryTree<T>
 }
 
 export default BinarySearchTree;
-
-const t = new BinarySearchTree();
-
-t.insert(8);
-t.insert(3);
-t.insert(10);
-// t.insert(1);
-// t.insert(6);
-// t.insert(4);
-
-t.delete(3);
-
-console.log(t);
